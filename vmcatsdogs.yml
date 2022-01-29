@@ -1,0 +1,91 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: vmcatsdogs
+spec:
+  selector:
+    app: vmcatsdogs 
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 8181
+    targetPort: 80
+    nodePort: 31919
+    
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: vm-catsdogs-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/lib/cats-dogs/database"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vm-catsdogs-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+        
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vmcatsdogs
+  labels:
+    app: vmcatsdogs
+spec:
+  serviceName: vmcatsdogs
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vmcatsdogs
+  template:
+    metadata:
+      labels:
+        app: vmcatsdogs 
+    spec:
+      containers:
+      - name: vmcatsdogsserver
+        image: vinodmandli/vmcatsdogs:latest
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+            httpHeaders:
+            - name: Custom-Header
+              value: Awesome
+          initialDelaySeconds: 119
+          periodSeconds: 2
+        volumeMounts:
+        - name: vm-catsdogs-persistent-db
+          mountPath: /var/lib/cats-dogs
+      volumes:
+      - name: vm-catsdogs-persistent-db
+        persistentVolumeClaim:
+          claimName: vm-catsdogs-pv-claim
+            
+
