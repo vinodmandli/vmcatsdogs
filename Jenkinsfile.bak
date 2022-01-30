@@ -2,6 +2,7 @@ pipeline {
 
   environment {
     dockerimagename = "vinodmandli/vmcatsdogs"
+	registryCredential = 'dockerHubCredentials'
     dockerImage = ""
   }
 
@@ -24,9 +25,6 @@ pipeline {
     }
 
     stage('Pushing Image') {
-      environment {
-               registryCredential = 'dockerHubCredentials'
-           }
       steps{
         script {
           docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
@@ -39,7 +37,7 @@ pipeline {
     stage('Deploying App to Kubernetes') {
       steps {
         script {
-          kubernetesDeploy(configs: "vmcatsdogs.yml", kubeconfigId: "kubernetes")
+          sh 'kubectl apply -f ./vmcatsdogs.yml'
         }
       }
     }

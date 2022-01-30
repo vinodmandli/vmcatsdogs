@@ -37,7 +37,7 @@ pipeline {
     stage('Deploying App to Kubernetes') {
       steps {
         script {
-          kubernetesDeploy(configs: "vmcatsdogs.yml", kubeconfigId: "kubernetes")
+          sh 'kubectl apply -f ./vmcatsdogs.yml'
         }
       }
     }
