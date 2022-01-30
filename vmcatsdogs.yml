@@ -52,7 +52,7 @@ metadata:
     app: vmcatsdogs
 spec:
   serviceName: vmcatsdogs
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
       app: vmcatsdogs
@@ -87,5 +87,5 @@ spec:
       - name: vm-catsdogs-persistent-db
         persistentVolumeClaim:
           claimName: vm-catsdogs-pv-claim
-            
-
+  updateStrategy:
+    type: RollingUpdate
