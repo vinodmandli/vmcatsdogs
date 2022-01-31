@@ -28,7 +28,7 @@ pipeline {
       steps{
         script {
           docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-            dockerImage.push("latest")
+            dockerImage.push(${env.BUILD_ID})
           }
         }
       }
@@ -37,7 +37,9 @@ pipeline {
     stage('Deploying App to Kubernetes') {
       steps {
         script {
-          sh 'kubectl apply -f ./vmcatsdogs.yml'
+          sh 'kubectl apply -f ./vmcatsdogs.yml
+		  kubectl set image statefulset/vmcatsdogs vmcatsdogsserver=vinodmandli/vmcatsdogs:${env.BUILD_ID}
+		  '
         }
       }
     }
