@@ -100,5 +100,5 @@ if image_exists $repository $revision; then
 else
   echo "****ERROR while building docker image. removing docker image and Exiting..."
   docker rmi $repository:$revision
-  exit "dockerImageBuildError"
+  exit 999
 fi

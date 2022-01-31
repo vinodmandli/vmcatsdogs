@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Returns boolean indicates whether designated tagged-image exists.
   # arg1: repository name
