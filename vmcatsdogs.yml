@@ -28,7 +28,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/var/lib/cats-dogs/database"
+    path: "/var/lib/cats-dogs"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

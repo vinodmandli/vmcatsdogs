@@ -11,12 +11,24 @@ app = Flask(__name__)
 
 def read_values(file_path):
     result = {}
+    db = {}
+    # checking whether file exists or not
+    if not os.path.exists(file_path):
+        if not os.path.exists(os.path.dirname(file_path)):
+            os.makedirs(os.path.dirname(file_path))
+            # file not found message
+            print("Created directory")
+        #db = read_values(file_path)
+        db[button1_name] = 0
+        db[button2_name] = 0
+        print("Intital db values %s." % db)
+        write_values(file_path,db)
 
     #print("Reading file")
     with open(file_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            #print(row)
+            print(row)
             result = row
 
             
@@ -111,8 +123,6 @@ random_timeout = timeout_min + randrange(timeout_max)
 failure_time = datetime.now() + timedelta(minutes=random_timeout)
 print("The application will fail at %s." % failure_time)
 
-db = {}
-col_names=[button1_name,button2_name]
 # checking whether file exists or not
 if not os.path.exists(db_file):
     if not os.path.exists(os.path.dirname(db_file)):

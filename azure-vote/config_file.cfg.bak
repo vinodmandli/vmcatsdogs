@@ -1,6 +1,6 @@
 TITLE = 'Quantexa Pets Voting App'
 VOTE1VALUE = 'Cats'
 VOTE2VALUE = 'Dogs'
-DB_PATH = '/var/lib/cats-dogs/databaseCSV'
+DB_PATH = '/var/lib/cats-dogs/database'
 FAIL_TIMEOUT_MIN=2
 FAIL_TIMEOUT_MAX=15
