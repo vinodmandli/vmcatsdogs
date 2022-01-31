@@ -74,7 +74,7 @@ fi
 if image_exists $repository $revision; then
   echo "docker image has been built.
   "
-  indockerHub=$(docker manifest inspect $repository:$revision > /dev/null ; echo $?)
+  
   if docker manifest inspect $repository:$revision > /dev/null ; echo $?; then
 	echo "docker image exist. skipping docker push..."
   else

@@ -22,9 +22,8 @@ function build_image() {
 
 # Set constants
 readonly repository=vinodmandli/vmcatsdogs
-readonly localGitRepository=/c/test/tgit
+readonly localGitRepository=~/cats-dogs
 readonly remoteGitRepository="https://github.com/vinodmandli/vmcatsdogs.git"
-#~/cats-dogs
 readonly path_to_dockerfile=.
 readonly dockerUserName=vinodmandli
 
