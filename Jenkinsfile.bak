@@ -39,6 +39,7 @@ pipeline {
         script {
           sh 'kubectl apply -f ./vmcatsdogs.yml
 		  kubectl set image statefulset/vmcatsdogs vmcatsdogsserver=vinodmandli/vmcatsdogs:${env.BUILD_ID}
+		  kubectl rollout status statefulset/vmcatsdogs
 		  '
         }
       }
