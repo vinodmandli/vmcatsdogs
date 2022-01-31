@@ -38,7 +38,7 @@ pipeline {
       steps {
         script {
           sh 'kubectl apply -f ./vmcatsdogs.yml'
-		  sh 'kubectl set image statefulset/vmcatsdogs vmcatsdogsserver=vinodmandli/vmcatsdogs:env.BUILD_NUMBER'
+		  sh ("kubectl set image statefulset/vmcatsdogs vmcatsdogsserver=vinodmandli/vmcatsdogs:${env.BUILD_NUMBER}")
 		  sh 'kubectl rollout status statefulset/vmcatsdogs'
         }
       }
