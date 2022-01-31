@@ -37,10 +37,9 @@ pipeline {
     stage('Deploying App to Kubernetes') {
       steps {
         script {
-          sh 'kubectl apply -f ./vmcatsdogs.yml
-		  kubectl set image statefulset/vmcatsdogs vmcatsdogsserver=vinodmandli/vmcatsdogs:${env.BUILD_ID}
-		  kubectl rollout status statefulset/vmcatsdogs
-		  '
+          sh 'kubectl apply -f ./vmcatsdogs.yml'
+		  sh 'kubectl set image statefulset/vmcatsdogs vmcatsdogsserver=vinodmandli/vmcatsdogs:${env.BUILD_ID}'
+		  sh 'kubectl rollout status statefulset/vmcatsdogs'
         }
       }
     }
